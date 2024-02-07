@@ -12,7 +12,7 @@ router.get('/index', (req, res) => {
 });
 
 router.post('/salida', (req, res) => {
-    manejador.salida(res, '/salida.html');
+    manejador.salida(req, res, '/salida.html');
 });
 
 // --------------------------------------------------
