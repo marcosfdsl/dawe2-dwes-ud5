@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALIDA</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+        }
+
+        .contenendorSalida {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        #txtNombre:disabled {
+            color: black;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>PAGINA DE SALIDA</h1>
+    <P>Documento HTML!</P>
+    <section class="contenendorSalida">
+        <fieldset id="fld1"><label for="nombre">Tu nombre:</label> <input id="txtNombre" type="text" name="nombre" id=""
+                value={nombre} disabled></input> <input type="text" name="" id="" value={apellidos} disabled> </fieldset>
+        <fieldset id="fld2"><label for="correo">Correo:</label> <input type="text" name="correo" id="" value={correo} disabled>
+            <label for="telefono">Teléfono:</label> <input type="text" name="telefono" id="" value={telefono} disabled>
+        </fieldset>
+        <fieldset id="fld3"><label for="sugerencia">Sugerencia:</label> <input type="text" name="sugerencia" id=""
+                value={sugerencia} disabled></fieldset>
+
+    </section>
+
+</body>
+
+</html>

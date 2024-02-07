@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INICIO</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        #miFormDatos{
+            display:flex;
+            flex-direction: column;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>PAGINA DE INICIO</h1>
+    <P>Documento HTML!</P>
+
+    <form action="/salida" method="post">
+        <fieldset id="miFormDatos">
+            <legend>Datos</legend>
+            <section class="flexItem">
+                <label for="nombre">NOMBRE: </label>
+                <input type="text" name="nombre" id="txtNombre">
+            </section>
+            <section class="flexItem">
+                <label for="apellidos">APELLIDOS: </label>
+                <input type="text" name="apellidos" id="txtApellidos">
+            </section>
+            <section class="flexItem">
+                <label for="correo">CORREO: </label>
+                <input type="email" name="correo" id="emaCorreo" value="ivan.arevalo@u-tad.com">
+            </section>
+            <section class="flexItem">
+                <label for="telefono">TELEFONO: </label>
+                <input type="number" name="telefono" id="numTelefono">
+            </section>
+            <section class="flexItem">
+                <label for="sugerencia">SUGERENCIA: </label>
+                <textarea name="sugerencia" id="txaSugerencia" cols="30" rows="5" placeholder="ESCRIBE AQUI TU SUGERENCIA! ESTO NO ES UN BUZÓN DE QUEJAS!"></textarea>
+            </section>
+        </fieldset>
+        <fieldset>
+            <legend>Controles</legend>
+            <input type="submit" value="ENVIAR">
+            <input type="reset" value="LIMPIAR">
+        </fieldset>
+    </form>
+
+</body>
+
+</html>
