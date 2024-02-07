@@ -3,25 +3,25 @@ const router = express.Router();
 const manejador = require('./manejador.js');
 const db = require('./db/db.js')
 
+// GET INDEX
 router.get('/', (req, res) => {
     manejador.root(res, '/index.html');
 });
-
 router.get('/index', (req, res) => {
     manejador.root(res, '/index.html');
 });
 
+// GET SALIDA
 router.get('/salida', (req, res) => {
     manejador.root(res, '/salida.html');
 });
 
+// POST SALIDA
 router.post('/salida', (req, res) => {
     manejador.salida(req, res);
 });
 
-
-// --------------------------------------------------
-
+// GET DATA
 router.get('/api/v1/data', (req, res) => {
     res.status(200).send({
         success: 'true',
@@ -30,6 +30,7 @@ router.get('/api/v1/data', (req, res) => {
     });
 });
 
+// GET DATA ID
 router.get('/api/v1/data/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const data = db.find(d => d.id === id);
@@ -48,6 +49,7 @@ router.get('/api/v1/data/:id', (req, res) => {
     }
 })
 
+// POST DATA
 router.post('/api/v1/data', (req, res) => {
     if (!req.body.titulo || !req.body.descripcion) {
         res.status(400).send({
@@ -64,6 +66,7 @@ router.post('/api/v1/data', (req, res) => {
     res.end(JSON.stringify(data));
 });
 
+// PUT DATA ID
 router.put("/api/v1/data/:id", (req, res) => {
     const id = parseInt(req.params.id, 10);
     const data = db.find(d => d.id === id);
@@ -85,6 +88,7 @@ router.put("/api/v1/data/:id", (req, res) => {
     }
 });
 
+// DELETE DATA ID
 router.delete('/api/v1/data/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     const data = db.find(d => d.id === id);
@@ -103,6 +107,7 @@ router.delete('/api/v1/data/:id', (req, res) => {
     }
 })
 
+// GET 404
 router.get('*', (req, res) => {
     manejador.root(res, '/404.html');
 });
