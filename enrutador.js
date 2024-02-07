@@ -49,11 +49,10 @@ router.get('/api/v1/data/:id', (req, res) => {
 })
 
 router.post('/api/v1/data', (req, res) => {
-    if (!req.body.nombre || !req.body.correo) {
+    if (!req.body.titulo || !req.body.descripcion) {
         res.status(400).send({
             success: 'false',
-            message: 'Datos: Nombre y correo requeridos!'
-
+            message: 'Datos: Título y descripción requeridos!'
         });
         return;
     }
@@ -63,15 +62,16 @@ router.post('/api/v1/data', (req, res) => {
     db.push(data);
     res.writeHead(201, { 'Cpntent-Type': 'application/json; charset=utf-8' });
     res.end(JSON.stringify(data));
-
 });
 
 router.put("/api/v1/data/:id", (req, res) => {
     const id = parseInt(req.params.id, 10);
     const data = db.find(d => d.id === id);
     if (data) {
-        data.nombre = req.body.nombre ? req.body.nombre : profesores.nombre;
-        data.correo = req.body.correo ? req.body.correo : profesores.correo;
+        data.titulo = req.body.titulo ? req.body.titulo : data.titulo;
+        data.fecha = req.body.fecha ? req.body.fecha : data.fecha;
+        data.descripcion = req.body.descripcion ? req.body.descripcion : data.descripcion;
+        data.invitados = req.body.invitados ? req.body.invitados : data.invitados;
         return res.status(200).send({
             success: "true",
             message: "Dato actializado con éxito!",
@@ -103,10 +103,8 @@ router.delete('/api/v1/data/:id', (req, res) => {
     }
 })
 
-
 router.get('*', (req, res) => {
     manejador.root(res, '/404.html');
 });
-
 
 module.exports = router;
