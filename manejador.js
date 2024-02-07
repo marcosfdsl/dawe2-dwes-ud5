@@ -7,8 +7,6 @@ function root(res, ruta) {
 }
 
 function salida(req, res) {
-    postdata(req, res);
-
     let salida_html = false;
     try {
         salida_html = mod_fs.readFileSync('./html/salida.html', {encoding: 'utf8', flag: 'r'});
