@@ -3,6 +3,9 @@ const enrutador = require('./enrutador.js');
 const app = express();
 
 function iniciar() {
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+
     app.use(express.static('html'));
     app.use(enrutador);
 

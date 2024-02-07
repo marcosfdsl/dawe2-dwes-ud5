@@ -11,9 +11,14 @@ router.get('/index', (req, res) => {
     manejador.root(res, '/index.html');
 });
 
-router.post('/salida', (req, res) => {
-    manejador.salida(req, res, '/salida.html');
+router.get('/salida', (req, res) => {
+    manejador.root(res, '/salida.html');
 });
+
+router.post('/salida', (req, res) => {
+    manejador.salida(req, res);
+});
+
 
 // --------------------------------------------------
 
