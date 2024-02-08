@@ -7,11 +7,12 @@
     <title>INICIO</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             width: 100vw;
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
         }
 
@@ -38,8 +39,8 @@
         <fieldset class="miFormDatos">
             <legend>GET:ID</legend>
             <section class="flexItem">
-                <label for="idd">Id: </label>
-                <input type="text" name="idd" id="txtIdd">
+                <label for="idd">Id*: </label>
+                <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
             </section>
             <input type="submit" value="CONSULTAR POR ID">
         </fieldset>
@@ -49,23 +50,21 @@
         <fieldset class="miFormDatos">
             <legend>POST</legend>
             <section class="flexItem">
-                <label for="titulo">Título: </label>
-                <input type="text" name="titulo" id="txtTitulo" placeholder="Motivo de la cita">
+                <label for="titulo">Título*: </label>
+                <input type="text" name="titulo" id="txtTitulo" placeholder="OBLIGATORIO" required>
             </section>
             <section class="flexItem">
                 <label for="fecha">Fecha: </label>
-                <input type="datetime-local" name="fecha" id="txtFecha"
-                    placeholder="Fecha y hora de la cita (opcional)">
+                <input type="datetime-local" name="fecha" id="txtFecha">
             </section>
             <section class="flexItem">
-                <label for="descripcion">Descripción: </label>
-                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5"
-                    placeholder="Breve exposición del motivo de la cita."></textarea>
+                <label for="descripcion">Descripción*: </label>
+                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5" placeholder="OBLIGATORIO"
+                    required></textarea>
             </section>
             <section class="flexItem">
                 <label for="invitados">Invitados: </label>
-                <textarea name="invitados" id="txaInvitados" cols="30" rows="5"
-                    placeholder="Correos electrónicos de contactos que asisten a la cita (opcional)"></textarea>
+                <textarea name="invitados" id="txaInvitados" cols="30" rows="5"></textarea>
             </section>
             <input type="submit" value="AÑADIR">
         </fieldset>
@@ -75,27 +74,25 @@
         <fieldset class="miFormDatos">
             <legend>PUT:ID</legend>
             <section class="flexItem">
-                <label for="idd">Id: </label>
-                <input type="text" name="idd" id="txtIdd">
+                <label for="idd">Id*: </label>
+                <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
             </section>
             <section class="flexItem">
-                <label for="titulo">Título: </label>
-                <input type="text" name="titulo" id="txtTitulo" placeholder="Motivo de la cita">
+                <label for="titulo">Título*: </label>
+                <input type="text" name="titulo" id="txtTitulo" placeholder="OBLIGATORIO" required>
             </section>
             <section class="flexItem">
                 <label for="fecha">Fecha: </label>
-                <input type="datetime-local" name="fecha" id="txtFecha"
-                    placeholder="Fecha y hora de la cita (opcional)">
+                <input type="datetime-local" name="fecha" id="txtFecha">
             </section>
             <section class="flexItem">
-                <label for="descripcion">Descripción: </label>
-                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5"
-                    placeholder="Breve exposición del motivo de la cita."></textarea>
+                <label for="descripcion">Descripción*: </label>
+                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5" placeholder="OBLIGATORIO"
+                    required></textarea>
             </section>
             <section class="flexItem">
                 <label for="invitados">Invitados: </label>
-                <textarea name="invitados" id="txaInvitados" cols="30" rows="5"
-                    placeholder="Correos electrónicos de contactos que asisten a la cita (opcional)"></textarea>
+                <textarea name="invitados" id="txaInvitados" cols="30" rows="5"></textarea>
             </section>
             <input type="submit" value="MODIFICAR POR ID">
         </fieldset>
@@ -105,8 +102,8 @@
         <fieldset class="miFormDatos">
             <legend>DELETE:ID</legend>
             <section class="flexItem">
-                <label for="idd">Id: </label>
-                <input type="text" name="idd" id="txtIdd">
+                <label for="idd">Id*: </label>
+                <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
             </section>
             <input type="submit" value="ELIMINAR POR ID">
         </fieldset>

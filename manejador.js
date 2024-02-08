@@ -40,105 +40,73 @@ function getdata(req, res) {
 // GET DATA ID
 function getdataid(req, res) {
     if (!req.body.idd) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Id requerido!'
-        });
-        return;
-    }
+        root(res, '/404.html');
+    } else {
+        let compr = false;
 
-    let compr = false;
-
-    for (let i = 0; i < db.length; i++) {
-        if (db[i].id == Number(req.body.idd)) {
-            compr = true;
+        for (let i = 0; i < db.length; i++) {
+            if (db[i].id == Number(req.body.idd)) {
+                compr = true;
+            }
+        }
+    
+        if (compr == false) {
+            root(res, '/404.html');
+        } else {
+            salida(req, res, Number(req.body.idd));
         }
     }
-
-    if (compr == false) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Id incorrecto!'
-        });
-        return;
-    }
-
-    salida(req, res, Number(req.body.idd));
 }
 
 // POST DATA
 function postdata(req, res) {
     if (!req.body.titulo || !req.body.descripcion) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Título y descripción requeridos!'
-        });
-        return;
+        root(res, '/404.html');
+    } else {
+        const id = db.length + 1;
+        const data = { id, ...req.body };
+        db.push(data);
+
+        salida(req, res, id);
     }
-
-    const id = db.length + 1;
-    const data = { id, ...req.body };
-    db.push(data);
-
-    salida(req, res, id);
 }
 
 // PUT DATA ID
 function putdataid(req, res) {
-    if (!req.body.idd) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Id requerido!'
-        });
-        return;
-    }
+    if (!req.body.idd || !req.body.titulo || !req.body.descripcion) {
+        root(res, '/404.html');
+    } else {
+        let compr = -1;
 
-    let compr = -1;
+        for (let i = 0; i < db.length; i++) {
+            if (db[i].id == Number(req.body.idd)) {
+                compr = i;
+            }
+        }
 
-    for (let i = 0; i < db.length; i++) {
-        if (db[i].id == Number(req.body.idd)) {
-            compr = i;
+        if (compr == -1) {
+            root(res, '/404.html');
+        } else {
+            db[compr].id = req.body.idd;
+            db[compr].titulo = req.body.titulo;
+            db[compr].fecha = req.body.fecha;
+            db[compr].descripcion = req.body.descripcion;
+            db[compr].invitados = req.body.invitados;
+
+            salida(req, res, Number(req.body.idd));
         }
     }
-
-    if (compr == -1) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Id incorrecto!'
-        });
-        return;
-    }
-
-    db[compr].id = req.body.idd;
-    db[compr].titulo = req.body.titulo;
-    db[compr].fecha = req.body.fecha;
-    db[compr].descripcion = req.body.descripcion;
-    db[compr].invitados = req.body.invitados;
-
-    salida(req, res, Number(req.body.idd));
 }
 
 // DELETE DATA ID
 function deletedataid(req, res) {
-    if (!req.body.idd) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Id requerido!'
-        });
-        return;
+    if (!req.body.idd || Number(req.body.idd) > db.length || Number(req.body.idd) < 1) {
+        root(res, '/404.html');
+    } else {
+        db.splice(Number(req.body.idd) - 1, 1);
+
+        root(res, '/index.html');
     }
-
-    if (Number(req.body.idd) > db.length || Number(req.body.idd) < 1) {
-        res.status(400).send({
-            success: 'false',
-            message: 'Datos: Id incorrecto!'
-        });
-        return;
-    }
-
-    db.splice(Number(req.body.idd) - 1, 1);
-
-    salida(req, res, (Number(req.body.idd) - 1));
 }
 
 exports.root = root;
