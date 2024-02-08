@@ -14,47 +14,103 @@
             justify-content: center;
             align-items: center;
         }
+
         h1 {
             font-size: 2rem;
         }
-        #miFormDatos{
-            display:flex;
+
+        .miFormDatos {
+            display: flex;
             flex-direction: column;
         }
-        
     </style>
 </head>
-<body>
-    <h1>PAGINA DE INICIO</h1>
-    <P>Documento HTML!</P>
 
-    <form action="/salida" method="post">
-        <fieldset id="miFormDatos">
-            <legend>Datos</legend>
-            <section class="flexItem">
-                <label for="titulo">Título: </label>
-                <input type="text" name="titulo" id="txtTitulo" placeholder="Motivo de la cita" required>
-            </section>
-            <section class="flexItem">
-                <label for="fecha">Fecha: </label>
-                <input type="datetime-local" name="fecha" id="txtFecha" placeholder="Fecha y hora de la cita (opcional)">
-            </section>
-            <section class="flexItem">
-                <label for="descripcion">Descripción: </label>
-                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5" placeholder="Breve exposición del motivo de la cita." required></textarea>
-            </section>
-            <section class="flexItem">
-                <label for="invitados">Invitados: </label>
-                <textarea name="invitados" id="txaInvitados" cols="30" rows="5" placeholder="Correos electrónicos de contactos que asisten a la cita (opcional)"></textarea>
-            </section>
-        </fieldset>
-        <fieldset>
-            <legend>Controles</legend>
-            <input type="submit" value="ENVIAR">
-            <input type="reset" value="LIMPIAR">
+<body>
+    <form action="/getdata" method="post">
+        <fieldset class="miFormDatos">
+            <legend>GET</legend>
+            <input type="submit" value="CONSULTAR">
         </fieldset>
     </form>
 
+    <form action="/getdataid" method="post">
+        <fieldset class="miFormDatos">
+            <legend>GET:ID</legend>
+            <section class="flexItem">
+                <label for="idd">Id: </label>
+                <input type="text" name="idd" id="txtIdd">
+            </section>
+            <input type="submit" value="CONSULTAR POR ID">
+        </fieldset>
+    </form>
+
+    <form action="/postdata" method="post">
+        <fieldset class="miFormDatos">
+            <legend>POST</legend>
+            <section class="flexItem">
+                <label for="titulo">Título: </label>
+                <input type="text" name="titulo" id="txtTitulo" placeholder="Motivo de la cita">
+            </section>
+            <section class="flexItem">
+                <label for="fecha">Fecha: </label>
+                <input type="datetime-local" name="fecha" id="txtFecha"
+                    placeholder="Fecha y hora de la cita (opcional)">
+            </section>
+            <section class="flexItem">
+                <label for="descripcion">Descripción: </label>
+                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5"
+                    placeholder="Breve exposición del motivo de la cita."></textarea>
+            </section>
+            <section class="flexItem">
+                <label for="invitados">Invitados: </label>
+                <textarea name="invitados" id="txaInvitados" cols="30" rows="5"
+                    placeholder="Correos electrónicos de contactos que asisten a la cita (opcional)"></textarea>
+            </section>
+            <input type="submit" value="AÑADIR">
+        </fieldset>
+    </form>
+
+    <form action="/putdataid" method="post">
+        <fieldset class="miFormDatos">
+            <legend>PUT:ID</legend>
+            <section class="flexItem">
+                <label for="idd">Id: </label>
+                <input type="text" name="idd" id="txtIdd">
+            </section>
+            <section class="flexItem">
+                <label for="titulo">Título: </label>
+                <input type="text" name="titulo" id="txtTitulo" placeholder="Motivo de la cita">
+            </section>
+            <section class="flexItem">
+                <label for="fecha">Fecha: </label>
+                <input type="datetime-local" name="fecha" id="txtFecha"
+                    placeholder="Fecha y hora de la cita (opcional)">
+            </section>
+            <section class="flexItem">
+                <label for="descripcion">Descripción: </label>
+                <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5"
+                    placeholder="Breve exposición del motivo de la cita."></textarea>
+            </section>
+            <section class="flexItem">
+                <label for="invitados">Invitados: </label>
+                <textarea name="invitados" id="txaInvitados" cols="30" rows="5"
+                    placeholder="Correos electrónicos de contactos que asisten a la cita (opcional)"></textarea>
+            </section>
+            <input type="submit" value="MODIFICAR POR ID">
+        </fieldset>
+    </form>
+
+    <form action="/deletedataid" method="post">
+        <fieldset class="miFormDatos">
+            <legend>DELETE:ID</legend>
+            <section class="flexItem">
+                <label for="idd">Id: </label>
+                <input type="text" name="idd" id="txtIdd">
+            </section>
+            <input type="submit" value="ELIMINAR POR ID">
+        </fieldset>
+    </form>
 </body>
 
 </html>

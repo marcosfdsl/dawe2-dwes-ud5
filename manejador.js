@@ -6,14 +6,21 @@ function root(res, ruta) {
     res.sendFile(path.join(__dirname, 'html', ruta));
 }
 
-function salida(req, res) {
+function salida(req, res, id) {
+    for (let i = 0; i < db.length; i++) {
+        if (db[i].id == id) {
+            id = i;
+        }
+    }
+
     let salida_html = false;
     try {
-        salida_html = mod_fs.readFileSync('./html/salida.html', {encoding: 'utf8', flag: 'r'});
-        salida_html = salida_html.replace("%titulo%", req.body.titulo);
-        salida_html = salida_html.replace("%fecha%", req.body.fecha);
-        salida_html = salida_html.replace("%descripcion%", req.body.descripcion);
-        salida_html = salida_html.replace("%invitados%", req.body.invitados);
+        salida_html = mod_fs.readFileSync('./html/salida.html', { encoding: 'utf8', flag: 'r' });
+        salida_html = salida_html.replace(`%idd%`, db[id].id);
+        salida_html = salida_html.replace("%titulo%", db[id].titulo);
+        salida_html = salida_html.replace("%fecha%", db[id].fecha);
+        salida_html = salida_html.replace("%descripcion%", db[id].descripcion);
+        salida_html = salida_html.replace("%invitados%", db[id].invitados);
     } catch (error) {
         res.status(500).send("Error al leer el archivo de salida" + error);
     }
@@ -32,21 +39,31 @@ function getdata(req, res) {
 
 // GET DATA ID
 function getdataid(req, res) {
-    const id = parseInt(req.params.id, 10);
-    const data = db.find(d => d.id === id);
-
-    if (data) {
-        res.status(200).send({
-            success: 'true',
-            message: 'Dato recuperado con éxito!',
-            db: data
-        })
-    } else {
-        res.status(404).send({
+    if (!req.body.idd) {
+        res.status(400).send({
             success: 'false',
-            message: 'El dato no existe!',
-        })
+            message: 'Datos: Id requerido!'
+        });
+        return;
     }
+
+    let compr = false;
+
+    for (let i = 0; i < db.length; i++) {
+        if (db[i].id == Number(req.body.idd)) {
+            compr = true;
+        }
+    }
+
+    if (compr == false) {
+        res.status(400).send({
+            success: 'false',
+            message: 'Datos: Id incorrecto!'
+        });
+        return;
+    }
+
+    salida(req, res, Number(req.body.idd));
 }
 
 // POST DATA
@@ -62,49 +79,66 @@ function postdata(req, res) {
     const id = db.length + 1;
     const data = { id, ...req.body };
     db.push(data);
-    res.writeHead(201, { 'Cpntent-Type': 'application/json; charset=utf-8' });
-    res.end(JSON.stringify(data));
+
+    salida(req, res, id);
 }
 
 // PUT DATA ID
 function putdataid(req, res) {
-    const id = parseInt(req.params.id, 10);
-    const data = db.find(d => d.id === id);
-    if (data) {
-        data.titulo = req.body.titulo ? req.body.titulo : data.titulo;
-        data.fecha = req.body.fecha ? req.body.fecha : data.fecha;
-        data.descripcion = req.body.descripcion ? req.body.descripcion : data.descripcion;
-        data.invitados = req.body.invitados ? req.body.invitados : data.invitados;
-        return res.status(200).send({
-            success: "true",
-            message: "Dato actializado con éxito!",
-            db: data
+    if (!req.body.idd) {
+        res.status(400).send({
+            success: 'false',
+            message: 'Datos: Id requerido!'
         });
-    } else {
-        return res.status(404).send({
-            success: "false",
-            message: "El dato no existe!"
-        });
+        return;
     }
+
+    let compr = -1;
+
+    for (let i = 0; i < db.length; i++) {
+        if (db[i].id == Number(req.body.idd)) {
+            compr = i;
+        }
+    }
+
+    if (compr == -1) {
+        res.status(400).send({
+            success: 'false',
+            message: 'Datos: Id incorrecto!'
+        });
+        return;
+    }
+
+    db[compr].id = req.body.idd;
+    db[compr].titulo = req.body.titulo;
+    db[compr].fecha = req.body.fecha;
+    db[compr].descripcion = req.body.descripcion;
+    db[compr].invitados = req.body.invitados;
+
+    salida(req, res, Number(req.body.idd));
 }
 
 // DELETE DATA ID
 function deletedataid(req, res) {
-    const id = parseInt(req.params.id, 10);
-    const data = db.find(d => d.id === id);
-    if (data) {
-        db.splice(db.indexOf(data), 1);
-        return res.status(200).send({
-            success: "true",
-            message: "Dato eliminado con éxito!",
-            db: data
+    if (!req.body.idd) {
+        res.status(400).send({
+            success: 'false',
+            message: 'Datos: Id requerido!'
         });
-    } else {
-        return res.status(404).send({
-            success: "false",
-            message: "El dato no existe!"
-        });
+        return;
     }
+
+    if (Number(req.body.idd) > db.length || Number(req.body.idd) < 1) {
+        res.status(400).send({
+            success: 'false',
+            message: 'Datos: Id incorrecto!'
+        });
+        return;
+    }
+
+    db.splice(Number(req.body.idd) - 1, 1);
+
+    salida(req, res, (Number(req.body.idd) - 1));
 }
 
 exports.root = root;

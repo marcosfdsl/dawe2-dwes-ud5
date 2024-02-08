@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const manejador = require('./manejador.js');
+const db = require('./db/db.js')
 
 // GET INDEX
 router.get('/', (req, res) => {
@@ -15,35 +16,43 @@ router.get('/salida', (req, res) => {
     manejador.root(res, '/salida.html');
 });
 
+router.get('/datosss', (req, res) => {
+    res.status(200).send({
+        success: 'true',
+        message: 'Datos recuperados con éxito!',
+        data: db
+    });
+});
+
 // POST SALIDA
 router.post('/salida', (req, res) => {
     manejador.salida(req, res);
 });
 
 // GET DATA
-router.get('/api/v1/data', (req, res) => {
+router.post('/getdata', (req, res) => {
     manejador.getdata(req, res);
 });
 
 // GET DATA ID
-router.get('/api/v1/data/:id', (req, res) => {
+router.post('/getdataid', (req, res) => {
     manejador.getdataid(req, res);
 })
 
 // POST DATA
-router.post('/api/v1/data', (req, res) => {
+router.post('/postdata', (req, res) => {
     manejador.postdata(req, res);
 });
 
 // PUT DATA ID
-router.put("/api/v1/data/:id", (req, res) => {
+router.post('/putdataid', (req, res) => {
     manejador.putdataid(req, res);
 });
 
 // DELETE DATA ID
-router.delete('/api/v1/data/:id', (req, res) => {
+router.post('/deletedataid', (req, res) => {
     manejador.deletedataid(req, res);
-})
+});
 
 // GET 404
 router.get('*', (req, res) => {
