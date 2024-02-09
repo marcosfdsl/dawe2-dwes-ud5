@@ -81,7 +81,13 @@ function postdata(req, res) {
         const id = db[db.length - 1].id + 1;
         const data = { id, ...req.body };
         db.push(data);
-        salida(req, res, id);
+
+        if (comprobarId(id) == -1) {
+            salida(req, res, id);
+        }
+        else {
+            salida(req, res, comprobarId(id));
+        }
     }
 }
 
@@ -90,16 +96,16 @@ function putdataid(req, res) {
     if (!req.body.idd || !req.body.titulo || !req.body.descripcion) {
         root(res, '/404.html');
     } else {
-        if (comprobarId(Number(req.query.idd)) == -1) {
+        if (comprobarId(Number(req.body.idd)) == -1) {
             root(res, '/404.html');
         } else {
-            db[id].id = req.body.idd;
-            db[id].titulo = req.body.titulo;
-            db[id].fecha = req.body.fecha;
-            db[id].descripcion = req.body.descripcion;
-            db[id].invitados = req.body.invitados;
+            db[comprobarId(Number(req.body.idd))].id = req.body.idd;
+            db[comprobarId(Number(req.body.idd))].titulo = req.body.titulo;
+            db[comprobarId(Number(req.body.idd))].fecha = req.body.fecha;
+            db[comprobarId(Number(req.body.idd))].descripcion = req.body.descripcion;
+            db[comprobarId(Number(req.body.idd))].invitados = req.body.invitados;
 
-            salida(req, res, comprobarId(Number(req.query.idd)));
+            salida(req, res, comprobarId(Number(req.body.idd)));
         }
     }
 }
@@ -109,7 +115,7 @@ function deletedataid(req, res) {
     if (!req.body.idd) {
         root(res, '/404.html');
     } else {
-        if (comprobarId(Number(req.query.idd)) == -1) {
+        if (comprobarId(Number(req.body.idd)) == -1) {
             root(res, '/404.html');
         } else {
             db.splice(Number(req.body.idd) - 1, 1);
@@ -117,7 +123,6 @@ function deletedataid(req, res) {
         }
     }
 }
-
 
 // DEVUELVE LA POSICIÓN EN EL ARRAY DB QUE COINCIDE CON EL ID INTRODUCIDO
 function comprobarId(idd) {
