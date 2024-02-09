@@ -53,7 +53,7 @@ function getdata(req, res) {
                 res.write(`</div>`);
             }
         });
-
+        res.write(`<a href="/">VOLVER</a>`);
         res.end();
     } catch (error) {
         res.status(500).send("Error al leer el archivo de salida" + error);
@@ -119,7 +119,7 @@ function deletedataid(req, res) {
             root(res, '/404.html');
         } else {
             db.splice(comprobarId(Number(req.body.idd)), 1);
-            root(res, '/index.html');
+            getdata(req, res);
         }
     }
 }

@@ -12,7 +12,8 @@
             width: 100vw;
             height: 100vh;
             display: flex;
-            justify-content: space-around;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
         }
 
@@ -27,6 +28,12 @@
         textarea {
             margin-bottom: 0.5rem;
             background-color: white;
+        }
+
+        a {
+            margin-top: 2rem;
+            width: 100%;
+            text-align: center;
         }
     </style>
 </head>
@@ -48,6 +55,8 @@
         <label for="invitados">Invitados:</label>
         <textarea name="invitados" id="" cols="30" rows="5" disabled>%invitados%</textarea>
     </section>
+
+    <a href="/">VOLVER</a>
 
 </body>
 
