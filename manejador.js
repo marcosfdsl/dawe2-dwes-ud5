@@ -118,7 +118,7 @@ function deletedataid(req, res) {
         if (comprobarId(Number(req.body.idd)) == -1) {
             root(res, '/404.html');
         } else {
-            db.splice(Number(req.body.idd) - 1, 1);
+            db.splice(comprobarId(Number(req.body.idd)), 1);
             root(res, '/index.html');
         }
     }
@@ -127,13 +127,11 @@ function deletedataid(req, res) {
 // DEVUELVE LA POSICIÓN EN EL ARRAY DB QUE COINCIDE CON EL ID INTRODUCIDO
 function comprobarId(idd) {
     let id = -1;
-
     for (let i = 0; i < db.length; i++) {
         if (db[i].id == idd) {
             id = i;
         }
     }
-
     return id;
 }
 
