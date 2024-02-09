@@ -7,12 +7,6 @@ function root(res, ruta) {
 }
 
 function salida(req, res, id) {
-    for (let i = 0; i < db.length; i++) {
-        if (db[i].id == id) {
-            id = i;
-        }
-    }
-
     let salida_html = false;
     try {
         salida_html = mod_fs.readFileSync('./html/salida.html', { encoding: 'utf8', flag: 'r' });
@@ -30,25 +24,51 @@ function salida(req, res, id) {
 
 // GET DATA
 function getdata(req, res) {
-    res.status(200).send({
-        success: 'true',
-        message: 'Datos recuperados con éxito!',
-        data: db
-    });
+    try {
+        let salida_html = mod_fs.readFileSync(path.join(__dirname, 'html', 'salida2.html'), { encoding: 'utf8' });
+
+        res.write(salida_html);
+
+        let contador = 0;
+
+        db.forEach((item, index) => {
+            if (contador % 5 === 0) {
+                if (contador !== 0) {
+                    res.write(`</div>`);
+                }
+                res.write(`<div class="contenedorSalida">`);
+            }
+
+            res.write(`<section class="contenedor">`);
+            res.write(`<label for="idd">Id</label> <input type="text" name="idd" value="${item.id}" disabled><br>`);
+            res.write(`<label for="titulo">Titulo</label> <input type="text" name="titulo" value="${item.titulo}" disabled><br>`);
+            res.write(`<label for="fecha">Fecha:</label> <input type="datetime-local" name="fecha" value="${item.fecha}" disabled><br>`);
+            res.write(`<label for="descripcion">Descripción:</label> <textarea name="descripcion" disabled>${item.descripcion}</textarea><br>`);
+            res.write(`<label for="invitados">Invitados:</label> <textarea name="invitados" disabled>${item.invitados}</textarea><br><br>`);
+            res.write(`</section>`);
+
+            contador++;
+
+            if (contador === db.length || contador % 5 === 0) {
+                res.write(`</div>`);
+            }
+        });
+
+        res.end();
+    } catch (error) {
+        res.status(500).send("Error al leer el archivo de salida" + error);
+    }
 }
 
 // GET DATA ID
 function getdataid(req, res) {
     if (!req.query.idd) {
-        res.sendFile(path.join(__dirname, 'html', '/404.html'));
+        root(res, '/404.html');
     } else {
-        let id = Number(req.query.idd);
-        let data = db.find(item => item.id === id);
-
-        if (!data) {
-            res.sendFile(path.join(__dirname, 'html', '/404.html'));
+        if (comprobarId(Number(req.query.idd)) == -1) {
+            root(res, '/404.html');
         } else {
-            salida(req, res, id);
+            salida(req, res, comprobarId(Number(req.query.idd)));
         }
     }
 }
@@ -58,10 +78,9 @@ function postdata(req, res) {
     if (!req.body.titulo || !req.body.descripcion) {
         root(res, '/404.html');
     } else {
-        const id = db.length + 1;
+        const id = db[db.length - 1].id + 1;
         const data = { id, ...req.body };
         db.push(data);
-
         salida(req, res, id);
     }
 }
@@ -71,37 +90,46 @@ function putdataid(req, res) {
     if (!req.body.idd || !req.body.titulo || !req.body.descripcion) {
         root(res, '/404.html');
     } else {
-        let compr = -1;
-
-        for (let i = 0; i < db.length; i++) {
-            if (db[i].id == Number(req.body.idd)) {
-                compr = i;
-            }
-        }
-
-        if (compr == -1) {
+        if (comprobarId(Number(req.query.idd)) == -1) {
             root(res, '/404.html');
         } else {
-            db[compr].id = req.body.idd;
-            db[compr].titulo = req.body.titulo;
-            db[compr].fecha = req.body.fecha;
-            db[compr].descripcion = req.body.descripcion;
-            db[compr].invitados = req.body.invitados;
+            db[id].id = req.body.idd;
+            db[id].titulo = req.body.titulo;
+            db[id].fecha = req.body.fecha;
+            db[id].descripcion = req.body.descripcion;
+            db[id].invitados = req.body.invitados;
 
-            salida(req, res, Number(req.body.idd));
+            salida(req, res, comprobarId(Number(req.query.idd)));
         }
     }
 }
 
 // DELETE DATA ID
 function deletedataid(req, res) {
-    if (!req.body.idd || Number(req.body.idd) > db.length || Number(req.body.idd) < 1) {
+    if (!req.body.idd) {
         root(res, '/404.html');
     } else {
-        db.splice(Number(req.body.idd) - 1, 1);
-
-        root(res, '/index.html');
+        if (comprobarId(Number(req.query.idd)) == -1) {
+            root(res, '/404.html');
+        } else {
+            db.splice(Number(req.body.idd) - 1, 1);
+            root(res, '/index.html');
+        }
     }
+}
+
+
+// DEVUELVE LA POSICIÓN EN EL ARRAY DB QUE COINCIDE CON EL ID INTRODUCIDO
+function comprobarId(idd) {
+    let id = -1;
+
+    for (let i = 0; i < db.length; i++) {
+        if (db[i].id == idd) {
+            id = i;
+        }
+    }
+
+    return id;
 }
 
 exports.root = root;
