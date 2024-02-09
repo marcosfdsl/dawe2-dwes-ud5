@@ -4,24 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SALIDA</title>
+    <title>Datos</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             width: 100vw;
             height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        .contenendorSalida {
+        h1 {
+            width: 100%;
+            text-align: center;
+        }
+
+        .contenedorSalida {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .contenedor {
             display: flex;
             flex-direction: column;
-            padding: 1rem;
             background-color: rgb(215, 215, 215);
+            padding: 1rem;
+            width: 15%;
+            margin: 1rem;
         }
 
         input,
@@ -39,25 +54,7 @@
 </head>
 
 <body>
-    <section class="contenendorSalida">
-        <label for="idd">Id</label>
-        <input type="text" name="idd" id="" value="%idd%" disabled>
-
-        <label for="titulo">Titulo</label>
-        <input type="text" name="titulo" id="" value="%titulo%" disabled>
-
-        <label for="fecha">Fecha:</label>
-        <input type="datetime-local" name="fecha" id="" value="%fecha%" disabled>
-
-        <label for="descripcion">Descripción:</label>
-        <textarea name="descripcion" id="" cols="30" rows="5" disabled>%descripcion%</textarea>
-
-        <label for="invitados">Invitados:</label>
-        <textarea name="invitados" id="" cols="30" rows="5" disabled>%invitados%</textarea>
-    </section>
-
-    <a href="/">VOLVER</a>
-
+    <h1>BASE DE DATOS</h1>
 </body>
 
 </html>

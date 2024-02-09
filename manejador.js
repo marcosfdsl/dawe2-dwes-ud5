@@ -7,26 +7,23 @@ function root(res, ruta) {
 }
 
 function salida(req, res, id) {
-    let salida_html = false;
-    try {
-        salida_html = mod_fs.readFileSync('./html/salida.html', { encoding: 'utf8', flag: 'r' });
-        salida_html = salida_html.replace(`%idd%`, db[id].id);
-        salida_html = salida_html.replace("%titulo%", db[id].titulo);
-        salida_html = salida_html.replace("%fecha%", db[id].fecha);
-        salida_html = salida_html.replace("%descripcion%", db[id].descripcion);
-        salida_html = salida_html.replace("%invitados%", db[id].invitados);
-    } catch (error) {
-        res.status(500).send("Error al leer el archivo de salida" + error);
-    }
-
-    return res.send(salida_html);
+    let salida_html = mod_fs.readFileSync(path.join(__dirname, 'html', 'salida.html'), { encoding: 'utf8' });
+    res.write(salida_html);
+    res.write(`<section class="contenedor">`);
+    res.write(`<label for="idd">Id</label> <input type="text" name="idd" value="${db[id].id}" disabled><br>`);
+    res.write(`<label for="titulo">Titulo</label> <input type="text" name="titulo" value="${db[id].titulo}" disabled><br>`);
+    res.write(`<label for="fecha">Fecha:</label> <input type="datetime-local" name="fecha" value="${db[id].fecha}" disabled><br>`);
+    res.write(`<label for="descripcion">Descripción:</label> <textarea name="descripcion" disabled>${db[id].descripcion}</textarea><br>`);
+    res.write(`<label for="invitados">Invitados:</label> <textarea name="invitados" disabled>${db[id].invitados}</textarea><br><br>`);
+    res.write(`</section>`);
+    res.write(`<a href="/">VOLVER</a>`);
+    res.end();
 }
 
 // GET DATA
 function getdata(req, res) {
     try {
-        let salida_html = mod_fs.readFileSync(path.join(__dirname, 'html', 'salida2.html'), { encoding: 'utf8' });
-
+        let salida_html = mod_fs.readFileSync(path.join(__dirname, 'html', 'salida.html'), { encoding: 'utf8' });
         res.write(salida_html);
 
         let contador = 0;
