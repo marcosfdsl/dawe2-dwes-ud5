@@ -39,21 +39,16 @@ function getdata(req, res) {
 
 // GET DATA ID
 function getdataid(req, res) {
-    if (!req.body.idd) {
-        root(res, '/404.html');
+    if (!req.query.idd) {
+        res.sendFile(path.join(__dirname, 'html', '/404.html'));
     } else {
-        let compr = false;
+        let id = Number(req.query.idd);
+        let data = db.find(item => item.id === id);
 
-        for (let i = 0; i < db.length; i++) {
-            if (db[i].id == Number(req.body.idd)) {
-                compr = true;
-            }
-        }
-    
-        if (compr == false) {
-            root(res, '/404.html');
+        if (!data) {
+            res.sendFile(path.join(__dirname, 'html', '/404.html'));
         } else {
-            salida(req, res, Number(req.body.idd));
+            salida(req, res, id);
         }
     }
 }

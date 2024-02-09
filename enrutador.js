@@ -16,26 +16,18 @@ router.get('/salida', (req, res) => {
     manejador.root(res, '/salida.html');
 });
 
-router.get('/datosss', (req, res) => {
-    res.status(200).send({
-        success: 'true',
-        message: 'Datos recuperados con éxito!',
-        data: db
-    });
-});
-
 // POST SALIDA
 router.post('/salida', (req, res) => {
     manejador.salida(req, res);
 });
 
 // GET DATA
-router.post('/getdata', (req, res) => {
+router.get('/getdata', (req, res) => {
     manejador.getdata(req, res);
 });
 
 // GET DATA ID
-router.post('/getdataid', (req, res) => {
+router.get('/getdataid', (req, res) => {
     manejador.getdataid(req, res);
 })
 
