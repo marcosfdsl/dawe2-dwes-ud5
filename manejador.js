@@ -59,65 +59,49 @@ function getdata(req, res) {
 
 // GET DATA ID
 function getdataid(req, res) {
-    if (!req.query.idd) {
+    if (comprobarId(Number(req.query.idd)) == -1) {
         root(res, '/404.html');
     } else {
-        if (comprobarId(Number(req.query.idd)) == -1) {
-            root(res, '/404.html');
-        } else {
-            salida(req, res, comprobarId(Number(req.query.idd)));
-        }
+        salida(req, res, comprobarId(Number(req.query.idd)));
     }
 }
 
 // POST DATA
 function postdata(req, res) {
-    if (!req.body.titulo || !req.body.descripcion) {
-        root(res, '/404.html');
-    } else {
-        const id = parseInt(db[db.length - 1].id) + 1;
-        const data = { id, ...req.body };
-        db.push(data);
+    const id = parseInt(db[db.length - 1].id) + 1;
+    const data = { id, ...req.body };
+    db.push(data);
 
-        if (comprobarId(id) == -1) {
-            salida(req, res, id);
-        }
-        else {
-            salida(req, res, comprobarId(id));
-        }
+    if (comprobarId(id) == -1) {
+        salida(req, res, id);
+    }
+    else {
+        salida(req, res, comprobarId(id));
     }
 }
 
 // PUT DATA ID
 function putdataid(req, res) {
-    if (!req.body.idd || !req.body.titulo || !req.body.descripcion) {
+    if (comprobarId(Number(req.body.idd)) == -1) {
         root(res, '/404.html');
     } else {
-        if (comprobarId(Number(req.body.idd)) == -1) {
-            root(res, '/404.html');
-        } else {
-            db[comprobarId(Number(req.body.idd))].id = req.body.idd;
-            db[comprobarId(Number(req.body.idd))].titulo = req.body.titulo;
-            db[comprobarId(Number(req.body.idd))].fecha = req.body.fecha;
-            db[comprobarId(Number(req.body.idd))].descripcion = req.body.descripcion;
-            db[comprobarId(Number(req.body.idd))].invitados = req.body.invitados;
+        db[comprobarId(Number(req.body.idd))].id = req.body.idd;
+        db[comprobarId(Number(req.body.idd))].titulo = req.body.titulo;
+        db[comprobarId(Number(req.body.idd))].fecha = req.body.fecha;
+        db[comprobarId(Number(req.body.idd))].descripcion = req.body.descripcion;
+        db[comprobarId(Number(req.body.idd))].invitados = req.body.invitados;
 
-            salida(req, res, comprobarId(Number(req.body.idd)));
-        }
+        salida(req, res, comprobarId(Number(req.body.idd)));
     }
 }
 
 // DELETE DATA ID
 function deletedataid(req, res) {
-    if (!req.body.idd) {
+    if (comprobarId(Number(req.body.idd)) == -1) {
         root(res, '/404.html');
     } else {
-        if (comprobarId(Number(req.body.idd)) == -1) {
-            root(res, '/404.html');
-        } else {
-            db.splice(comprobarId(Number(req.body.idd)), 1);
-            getdata(req, res);
-        }
+        db.splice(comprobarId(Number(req.body.idd)), 1);
+        getdata(req, res);
     }
 }
 
