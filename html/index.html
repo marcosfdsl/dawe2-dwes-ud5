@@ -9,119 +9,142 @@
         body {
             margin: 0;
             padding: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
         }
 
         h1 {
-            font-size: 2rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 3vh;
+            margin-bottom: 3vh;
         }
 
-        .miFormDatos {
+        .contenedorSalida {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contenedor {
             display: flex;
             flex-direction: column;
             background-color: rgb(215, 215, 215);
             padding: 1rem;
+            margin-left: 2vw;
+            margin-right: 2vw;
+            margin-bottom: 4vh;
         }
 
         input,
         textarea {
             margin-bottom: 0.5rem;
+            width: 80vw;
         }
 
         legend {
             font-weight: bold;
             width: 100%;
             text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 1024px) {
+            .contenedorSalida {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+            input,
+            textarea {
+                width: 12vw;
+            }
         }
     </style>
 </head>
 
 <body>
-    <form action="/getdata" method="get" class="miFormDatos">
-        <legend>GET</legend>
-        <input type="submit" value="CONSULTAR">
-    </form>
+    <h1>MENÚ PRINCIPAL</h1>
+    <div class="contenedorSalida">
+        <form action="/getdata" method="get" class="contenedor">
+            <legend>GET</legend>
+            <input type="submit" value="CONSULTAR">
+        </form>
 
-    <form action="/getdataid" method="get" class="miFormDatos">
-        <legend>GET:ID</legend>
-        <section class="flexItem">
-            <label for="idd">Id*: </label>
-            <br>
-            <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
-        </section>
-        <input type="submit" value="CONSULTAR POR ID">
-    </form>
+        <form action="/getdataid" method="get" class="contenedor">
+            <legend>GET:ID</legend>
+            <section class="flexItem">
+                <label for="idd">Id*: </label>
+                <br>
+                <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
+            </section>
+            <input type="submit" value="CONSULTAR POR ID">
+        </form>
 
-    <form action="/postdata" method="post" class="miFormDatos">
-        <legend>POST</legend>
-        <section class="flexItem">
-            <label for="titulo">Título*: </label>
-            <br>
-            <input type="text" name="titulo" id="txtTitulo" placeholder="OBLIGATORIO" required>
-        </section>
-        <section class="flexItem">
-            <label for="fecha">Fecha: </label>
-            <br>
-            <input type="datetime-local" name="fecha" id="txtFecha">
-        </section>
-        <section class="flexItem">
-            <label for="descripcion">Descripción*: </label>
-            <br>
-            <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5" placeholder="OBLIGATORIO"
-                required></textarea>
-        </section>
-        <section class="flexItem">
-            <label for="invitados">Invitados: </label>
-            <br>
-            <textarea name="invitados" id="txaInvitados" cols="30" rows="5"></textarea>
-        </section>
-        <input type="submit" value="AÑADIR">
-    </form>
+        <form action="/postdata" method="post" class="contenedor">
+            <legend>POST</legend>
+            <section class="flexItem">
+                <label for="titulo">Título*: </label>
+                <br>
+                <input type="text" name="titulo" id="txtTitulo" placeholder="OBLIGATORIO" required>
+            </section>
+            <section class="flexItem">
+                <label for="fecha">Fecha: </label>
+                <br>
+                <input type="datetime-local" name="fecha" id="txtFecha">
+            </section>
+            <section class="flexItem">
+                <label for="descripcion">Descripción*: </label>
+                <br>
+                <textarea name="descripcion" id="txtDescripcion" rows="5" placeholder="OBLIGATORIO" required></textarea>
+            </section>
+            <section class="flexItem">
+                <label for="invitados">Invitados: </label>
+                <br>
+                <textarea name="invitados" id="txaInvitados" rows="5"></textarea>
+            </section>
+            <input type="submit" value="AÑADIR">
+        </form>
 
-    <form action="/putdataid" method="post" class="miFormDatos">
-        <legend>PUT:ID</legend>
-        <section class="flexItem">
-            <label for="idd">Id*: </label>
-            <br>
-            <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
-        </section>
-        <section class="flexItem">
-            <label for="titulo">Título*: </label>
-            <br>
-            <input type="text" name="titulo" id="txtTitulo" placeholder="OBLIGATORIO" required>
-        </section>
-        <section class="flexItem">
-            <label for="fecha">Fecha: </label>
-            <br>
-            <input type="datetime-local" name="fecha" id="txtFecha">
-        </section>
-        <section class="flexItem">
-            <label for="descripcion">Descripción*: </label>
-            <br>
-            <textarea name="descripcion" id="txtDescripcion" cols="30" rows="5" placeholder="OBLIGATORIO"
-                required></textarea>
-        </section>
-        <section class="flexItem">
-            <label for="invitados">Invitados: </label>
-            <br>
-            <textarea name="invitados" id="txaInvitados" cols="30" rows="5"></textarea>
-        </section>
-        <input type="submit" value="MODIFICAR POR ID">
-    </form>
+        <form action="/putdataid" method="post" class="contenedor">
+            <legend>PUT:ID</legend>
+            <section class="flexItem">
+                <label for="idd">Id*: </label>
+                <br>
+                <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
+            </section>
+            <section class="flexItem">
+                <label for="titulo">Título*: </label>
+                <br>
+                <input type="text" name="titulo" id="txtTitulo" placeholder="OBLIGATORIO" required>
+            </section>
+            <section class="flexItem">
+                <label for="fecha">Fecha: </label>
+                <br>
+                <input type="datetime-local" name="fecha" id="txtFecha">
+            </section>
+            <section class="flexItem">
+                <label for="descripcion">Descripción*: </label>
+                <br>
+                <textarea name="descripcion" id="txtDescripcion" rows="5" placeholder="OBLIGATORIO" required></textarea>
+            </section>
+            <section class="flexItem">
+                <label for="invitados">Invitados: </label>
+                <br>
+                <textarea name="invitados" id="txaInvitados" rows="5"></textarea>
+            </section>
+            <input type="submit" value="MODIFICAR POR ID">
+        </form>
 
-    <form action="/deletedataid" method="post" class="miFormDatos">
-        <legend>DELETE:ID</legend>
-        <section class="flexItem">
-            <label for="idd">Id*: </label>
-            <br>
-            <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
-        </section>
-        <input type="submit" value="ELIMINAR POR ID">
-    </form>
+        <form action="/deletedataid" method="post" class="contenedor">
+            <legend>DELETE:ID</legend>
+            <section class="flexItem">
+                <label for="idd">Id*: </label>
+                <br>
+                <input type="text" name="idd" id="txtIdd" placeholder="OBLIGATORIO" required>
+            </section>
+            <input type="submit" value="ELIMINAR POR ID">
+        </form>
+    </div>
 </body>
 
 </html>
