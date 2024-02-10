@@ -75,7 +75,7 @@ function postdata(req, res) {
     if (!req.body.titulo || !req.body.descripcion) {
         root(res, '/404.html');
     } else {
-        const id = db[db.length - 1].id + 1;
+        const id = parseInt(db[db.length - 1].id) + 1;
         const data = { id, ...req.body };
         db.push(data);
 
